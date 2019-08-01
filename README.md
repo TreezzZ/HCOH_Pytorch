@@ -42,6 +42,11 @@ optional arguments:
 ```
 
 # Experiments
+复现过程中有两个坑。
+1. W,W_prime需要进行归一化，否则W @ data过大，造成tanh只会输出-1,+1，梯度为0，没法更新。
+2. 论文3.4节给出的P的计算公式为P=(1-tanh(x))*tanh(x)，作者实际放出的代码里是P=1-tanh(x)*tanh(x)，前者没法更新或者效果很差，
+我没细推公式，可能是作者论文里打错公式了。
+
 cifar10: 1000 query images, 20000 training images, 60000 database images.
 
 每个code_length跑10次，计算map平均值。
