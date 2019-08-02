@@ -42,8 +42,9 @@ def run_hcoh(args):
     for code_length in [8, 16, 32, 64, 128]:
         args.code_length = code_length
         mAP = 0.0
+        precision = 0.0
         for i in range(10):
-            mAP += HCOH.hcoh(
+            m, p = HCOH.hcoh(
                 train_data,
                 train_targets,
                 query_data,
@@ -56,7 +57,9 @@ def run_hcoh(args):
                 args.device,
                 args.topk,
             )
-        logger.info('[code_length:{}][map:{:.3f}]'.format(code_length, mAP / 10))
+            mAP += m
+            precision += p
+        logger.info('[code_length:{}][map:{:.3f}][precision:{:.3f}]'.format(code_length, mAP / 10, precision / 10))
 
 
 def load_parse():

@@ -51,6 +51,7 @@ cifar10: 1000 query images, 20000 training images, 60000 database images.
 
 每个code_length跑10次，计算map平均值。
 
-8-bit | 16-bit | 32-bit | 64-bit | 128-bit  
-:-:   | :-:    | :-:    | :-:    | :-:
-0.561 | 0.656  | 0.728  | 0.736  | 0.745
+   Cifar10        | 8-bit | 16-bit | 32-bit | 64-bit | 128-bit  
+  :-:             |  :-:   | :-:    | :-:    | :-:    | :-:
+  mAP             |  0.561 | 0.656  | 0.728  | 0.736  | 0.745
+  Precision@500   |  0.633 | 0.725  | 0.778  | 0.782  | 0.793

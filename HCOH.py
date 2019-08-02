@@ -1,9 +1,8 @@
 import torch
 
-from loguru import logger
 from scipy.linalg import hadamard
 
-from utils.calc_map import calc_map
+from utils.evaluate import evaluate
 
 
 def hcoh(train_data,
@@ -51,9 +50,6 @@ def hcoh(train_data,
         device: str
         Using cpu or gpu
 
-        evaluate_freq: int
-        Frequency of evaluating
-
         topk: int
         Compute mAP using top k retrieval result
 
@@ -87,70 +83,21 @@ def hcoh(train_data,
         W = W - lr * dW
 
     # Evaluate
-    mAP = evaluate(
-        query_data,
-        query_targets,
-        database_data,
-        database_targets,
-        W,
-        device,
-        topk,
-    )
-
-    return mAP
-
-
-def evaluate(query_data,
-             query_targets,
-             database_data,
-             database_targets,
-             W,
-             device,
-             topk,
-             ):
-    """
-    Evaluate algorithm
-
-    Parameters
-        query_data: Tensor
-        Query dataset
-
-        query_targets: Tensor
-        Query targets
-
-        database_data: Tensor
-        Database dataset
-
-        database_targets: Tensor
-        Database targets
-
-        W, b: Tensor
-        Parameters
-
-        device: str
-        Using cpu or gpu
-
-        topk: int
-        Compute mAP using top k retrieval result
-
-    Returns
-        meanAP: float
-        mean Average precision
-    """
     # Generate hash code
     query_code = generate_code(query_data, W)
     database_code = generate_code(database_data, W)
 
     # Compute map
-    meanAP = calc_map(query_code,
-                      database_code,
-                      query_targets,
-                      database_targets,
-                      device,
-                      topk,
-                      )
+    mAP, precision = evaluate(
+        query_code,
+        database_code,
+        query_targets,
+        database_targets,
+        device,
+        topk,
+    )
 
-    return meanAP
+    return mAP, precision
 
 
 def generate_code(data, W):
