@@ -1,4 +1,4 @@
-# Deep Supervised Discrete Hashing
+# Supervised Online Hashing via Hadamard Codebook Learning
 
 论文[Supervised Online Hashing via Hadamard Codebook Learning](https://dl.acm.org/citation.cfm?id=3240519)
 
